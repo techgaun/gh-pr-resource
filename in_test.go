@@ -11,8 +11,8 @@ import (
 
 	"github.com/shurcooL/githubv4"
 	"github.com/stretchr/testify/assert"
-	resource "github.com/telia-oss/github-pr-resource"
-	"github.com/telia-oss/github-pr-resource/fakes"
+	resource "github.com/techgaun/github-pr-resource"
+	"github.com/techgaun/github-pr-resource/fakes"
 )
 
 func TestGet(t *testing.T) {

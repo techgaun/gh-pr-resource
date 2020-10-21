@@ -9,8 +9,8 @@ import (
 	"github.com/shurcooL/githubv4"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	resource "github.com/telia-oss/github-pr-resource"
-	"github.com/telia-oss/github-pr-resource/fakes"
+	resource "github.com/techgaun/github-pr-resource"
+	"github.com/techgaun/github-pr-resource/fakes"
 )
 
 func TestPut(t *testing.T) {

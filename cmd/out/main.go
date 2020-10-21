@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"log"
 	"os"
-
-	"github.com/telia-oss/github-pr-resource"
+	
+	"github.com/techgaun/github-pr-resource"
 )
 
 func main() {

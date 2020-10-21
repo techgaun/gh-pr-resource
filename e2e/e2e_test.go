@@ -14,7 +14,7 @@ import (
 	"testing"
 	"time"
 
-	resource "github.com/telia-oss/github-pr-resource"
+	resource "github.com/techgaun/github-pr-resource"
 
 	"github.com/google/go-github/v28/github"
 	"github.com/shurcooL/githubv4"
