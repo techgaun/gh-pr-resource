@@ -34,7 +34,7 @@ Loop:
 		}
 
 		// Filter pull request if the BaseBranch does not match the one specified in source
-		if request.Source.BaseBranch != "" && p.PullRequestObject.BaseRefName != request.Source.BaseBranch {
+		if !MatchesBaseBranch(request.Source.BaseBranch, p.PullRequestObject.BaseRefName) {
 			continue
 		}
 
@@ -153,6 +153,17 @@ Loop:
 func ContainsSkipCI(s string) bool {
 	re := regexp.MustCompile("(?i)\\[(ci skip|skip ci)\\]")
 	return re.MatchString(s)
+}
+
+// MatchesBaseBranch returns true if base branch is empty
+// or it matches the ref name of the pull request
+func MatchesBaseBranch(baseBranch string, baseRefName string) bool {
+	if baseBranch == "" {
+		return true
+	}
+
+	re := regexp.MustCompile(baseBranch)
+	return re.MatchString(baseRefName)
 }
 
 // FilterIgnorePath ...

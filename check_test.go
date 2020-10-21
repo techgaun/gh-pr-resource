@@ -335,6 +335,47 @@ func TestContainsSkipCI(t *testing.T) {
 	}
 }
 
+func TestMatchesBaseBranch(t *testing.T) {
+	tests := []struct {
+		description string
+		baseBranch  string
+		baseRefName string
+		want        bool
+	}{
+		{
+			description: "matches base branch for regular string",
+			baseBranch:  "develop",
+			baseRefName: "develop",
+			want:        true,
+		},
+		{
+			description: "matches base branch for simple regex",
+			baseBranch:  "(master|develop)",
+			baseRefName: "develop",
+			want:        true,
+		},
+		{
+			description: "does not match for regular string",
+			baseBranch:  "master",
+			baseRefName: "develop",
+			want:        false,
+		},
+		{
+			description: "does not match regex",
+			baseBranch:  "(master|develop)",
+			baseRefName: "some-other-branch",
+			want:        false,
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.description, func(t *testing.T) {
+			got := resource.MatchesBaseBranch(tc.baseBranch, tc.baseRefName)
+			assert.Equal(t, tc.want, got)
+		})
+	}
+}
+
 func TestFilterPath(t *testing.T) {
 	cases := []struct {
 		description string
