@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	
+	"github.com/techgaun/github-pr-resource"
 )
 
 func main() {
