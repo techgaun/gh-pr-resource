@@ -1,15 +1,16 @@
 ## Github PR resource
 
-[![Build Status](https://travis-ci.org/telia-oss/github-pr-resource.svg?branch=master)](https://travis-ci.org/telia-oss/github-pr-resource)
-[![Go Report Card](https://goreportcard.com/badge/github.com/telia-oss/github-pr-resource)](https://goreportcard.com/report/github.com/telia-oss/github-pr-resource)
-[![Docker Automated build](https://img.shields.io/docker/automated/teliaoss/github-pr-resource.svg)](https://hub.docker.com/r/teliaoss/github-pr-resource/)
+[![Build Status](https://travis-ci.org/techgaun/github-pr-resource.svg?branch=master)](https://travis-ci.org/techgaun/github-pr-resource)
+[![Go Report Card](https://goreportcard.com/badge/github.com/techgaun/github-pr-resource)](https://goreportcard.com/report/github.com/techgaun/github-pr-resource)
+[![Docker Automated build](https://img.shields.io/docker/automated/techgaun/github-pr-resource.svg)](https://hub.docker.com/r/techgaun/github-pr-resource/)
 
 [graphql-api]: https://developer.github.com/v4
-[original-resource]: https://github.com/jtarchie/github-pullrequest-resource
+[original-resource]: https://github.com/techgaun/github-pr-resource
 
 A Concourse resource for pull requests on Github. Written in Go and based on the [Github V4 (GraphQL) API][graphql-api].
 Inspired by [the original][original-resource], with some important differences:
 
+- `base_branch` configuration is allowed to be regex
 - Github V4: `check` only requires 1 API call per 100th *open* pull request. (See [#costs](#costs) for more information).
 - Fetch/merge: `get` will always merge a specific commit from the Pull request into the latest base.
 - Metadata: `get` and `put` provides information about which commit (SHA) was used from both the PR and base.
@@ -33,7 +34,7 @@ Make sure to check out [#migrating](#migrating) to learn more.
 | `ignore_drafts`             | No       | `false`                          | Disable triggering of the resource if the pull request is in Draft status.                                                                                                                                                                                                                 |
 | `required_review_approvals` | No       | `2`                              | Disable triggering of the resource if the pull request does not have at least `X` approved review(s).                                                                                                                                                                                      |
 | `git_crypt_key`             | No       | `AEdJVENSWVBUS0VZAAAAA...`       | Base64 encoded git-crypt key. Setting this will unlock / decrypt the repository with git-crypt. To get the key simply execute `git-crypt export-key -- - | base64` in an encrypted repository.                                                                                             |
-| `base_branch`               | No       | `master`                         | Name of a branch. The pipeline will only trigger on pull requests against the specified branch.                                                                                                                                                                                            |
+| `base_branch`               | No       | `master`                         | Name of a branch (can be regex). The pipeline will only trigger on pull requests against the specified branch.                                                                                                                                                                                            |
 | `labels`                    | No       | `["bug", "enhancement"]`         | The labels on the PR. The pipeline will only trigger on pull requests having at least one of the specified labels.                                                                                                                                                                         |
 | `disable_git_lfs`           | No       | `true`                           | Disable Git LFS, skipping an attempt to convert pointers of files tracked into their corresponding objects when checked out into a working copy.                                                                                                                                           |
 | `states`                    | No       | `["OPEN", "MERGED"]`             | The PR states to select (`OPEN`, `MERGED` or `CLOSED`). The pipeline will only trigger on pull requests matching one of the specified states. Default is ["OPEN"].                                                                                                                         |
@@ -87,11 +88,11 @@ requested version and the metadata emitted by `get` are available to your tasks 
 
 The information in `metadata.json` is also available as individual files in the `.git/resource` directory, e.g. the `base_sha`
 is available as `.git/resource/base_sha`. For a complete list of available (individual) metadata files, please check the code
-[here](https://github.com/telia-oss/github-pr-resource/blob/master/in.go#L66).
+[here](https://github.com/techgaun/github-pr-resource/blob/master/in.go#L66).
 
 When specifying `skip_download` the pull request volume mounted to subsequent tasks will be empty, which is a problem
 when you set e.g. the pending status before running the actual tests. The workaround for this is to use an alias for
-the `put` (see https://github.com/telia-oss/github-pr-resource/issues/32 for more details).
+the `put` (see https://github.com/techgaun/github-pr-resource/issues/32 for more details).
 Example here:
 
 ```yaml
@@ -136,7 +137,7 @@ resource_types:
 - name: pull-request
   type: docker-image
   source:
-    repository: teliaoss/github-pr-resource
+    repository: techgaun/github-pr-resource
 
 resources:
 - name: pull-request
@@ -245,4 +246,4 @@ If you are coming from [jtarchie/github-pullrequest-resource][original-resource]
 
 Note that if you are migrating from the original resource on a Concourse version prior to `v5.0.0`, you might
 see an error `failed to unmarshal request: json: unknown field "ref"`. The solution is to rename the resource
-so that the history is wiped. See [#64](https://github.com/telia-oss/github-pr-resource/issues/64) for details.
+so that the history is wiped. See [#64](https://github.com/techgaun/github-pr-resource/issues/64) for details.
