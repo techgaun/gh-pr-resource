@@ -1,11 +1,15 @@
 ## Github PR resource
 
+_This repo is a work in progress and fork of awesome
+[telia-oss/github-pr-resource](https://github.com/telia-oss/github-pr-resource). Depending on where this repo ends up
+going, I may eventually open up a PR to original one but the primary reason is for me to use for personalized reasons_
+
 [![Build Status](https://travis-ci.org/techgaun/github-pr-resource.svg?branch=master)](https://travis-ci.org/techgaun/github-pr-resource)
 [![Go Report Card](https://goreportcard.com/badge/github.com/techgaun/github-pr-resource)](https://goreportcard.com/report/github.com/techgaun/github-pr-resource)
 [![Docker Automated build](https://img.shields.io/docker/automated/techgaun/github-pr-resource.svg)](https://hub.docker.com/r/techgaun/github-pr-resource/)
 
 [graphql-api]: https://developer.github.com/v4
-[original-resource]: https://github.com/techgaun/github-pr-resource
+[original-resource]: https://github.com/telia-oss/github-pr-resource
 
 A Concourse resource for pull requests on Github. Written in Go and based on the [Github V4 (GraphQL) API][graphql-api].
 Inspired by [the original][original-resource], with some important differences:
